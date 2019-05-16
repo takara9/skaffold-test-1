@@ -2,6 +2,9 @@
 
 IKS (IBM Cloud Kubernetes Service) で Skaffold を利用できることを確認するためのサンプルコートです。
 
+これは、Go言語で書いたウェブサーバーをコンテナとしてビルドして、レジストリに登録しておき、Kubernetesにデプロイする簡単なコードです。
+Go言語のソースコードを変更する都度、Skaffoldが監視していて、Kubernetesへデプロイしてくれます。
+
 
 ## 前提条件
 
@@ -27,6 +30,19 @@ IKS (IBM Cloud Kubernetes Service) で Skaffold を利用できることを確�
         - containerPort: 8080
 ~~~
 
+もう一つ、skaffoldの設定ファイルも修正します。
+
+~~~
+apiVersion: skaffold/v1beta10
+kind: Config
+build:
+  artifacts:
+  - image: <YOUR REG ID>/skaffold-example
+deploy:
+  kubectl:
+    manifests:
+    - k8s-webserver.yaml
+~~~
 
 
 ## 操作方法
